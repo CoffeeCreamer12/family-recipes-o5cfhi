@@ -102,6 +102,20 @@ header.mast .script{font-size:clamp(15px,4vw,19px);display:block;margin:6px 0 18
 .meta{font-size:13px;color:var(--soft);margin:10px 0 0;line-height:1.9}
 .meta span{white-space:nowrap}
 .meta b{font-weight:400;color:var(--sage);margin:0 4px}
+/* Keep screen on: switch under the title */
+.wakebox{display:flex;flex-direction:column;align-items:center;margin:16px 0 0}
+.wake{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--rule);background:#fff;border-radius:999px;padding:7px 8px 7px 14px;
+  cursor:pointer;color:var(--ink);font-family:var(--head);font-weight:600;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:44px}
+.wake .sun{width:18px;height:18px;color:var(--soft);flex:none;transition:color .2s}
+.wake .track{position:relative;flex:none;width:44px;height:26px;border-radius:999px;background:var(--cream);border:1px solid var(--rule);transition:background .2s,border-color .2s}
+.wake .knob{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.wake[aria-checked=true] .track{background:var(--sage-d);border-color:var(--sage-d)}
+.wake[aria-checked=true] .knob{transform:translateX(18px)}
+.wake[aria-checked=true] .sun{color:var(--sage-d)}
+.wake:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+.wakenote{font-size:12px;font-style:italic;color:var(--soft);margin:6px 0 0;min-height:1em}
+.wakenote.warn{color:#8a5a3c}
 .cols{display:grid;gap:10px 44px;margin-top:22px;border-top:1px solid var(--rule);padding-top:20px}
 @media(min-width:760px){.cols{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
 .cols h2{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.24em;font-size:19px;margin:6px 0 12px;color:var(--ink)}
@@ -253,9 +267,53 @@ function list(){
   } else el.innerHTML = `<div class="grid">${rs.map(card).join('')}</div>`;
 }
 
-let wake = null;
-async function keepAwake(){ try { if ('wakeLock' in navigator && document.visibilityState === 'visible' && current()) wake = await navigator.wakeLock.request('screen'); } catch(e) {} }
-document.addEventListener('visibilitychange', keepAwake);
+// ---- Keep screen on (Screen Wake Lock). Preference defaults to ON and is remembered; the switch only shows ON
+// while a lock is actually held, and says so plainly when the browser can't do it.
+const WAKEK = 'cookbook-keep-screen-on';
+let wantWake = localStorage.getItem(WAKEK) !== 'off';
+let wake = null, wakeStatus = 'idle';   // idle | pending | on | unsupported | failed
+const WAKE_HTML = `<div class="wakebox"><button class="wake" id="wake" type="button" role="switch" aria-checked="false">
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>
+  <span>Keep screen on</span><span class="track" aria-hidden="true"><span class="knob"></span></span></button>
+  <p class="wakenote" id="wakenote" aria-live="polite"></p></div>`;
+function wakeUI(){
+  const b = document.getElementById('wake'), n = document.getElementById('wakenote');
+  if (!b) return;
+  b.setAttribute('aria-checked', String(wantWake && wakeStatus === 'on'));
+  let msg = '', warn = false;
+  if (!wantWake) msg = 'Screen may dim as usual';
+  else if (wakeStatus === 'on') msg = 'Your screen will stay on';
+  else if (wakeStatus === 'unsupported') { msg = 'Not supported on this browser'; warn = true; }
+  else if (wakeStatus === 'failed') { msg = 'Couldn\u2019t keep the screen on \u2014 tap to try again'; warn = true; }
+  n.textContent = msg; n.classList.toggle('warn', warn);
+}
+async function keepAwake(){
+  if (!document.getElementById('wake')) { if (wake) releaseWake(); return; }   // link-only pages have no switch
+  if (!wantWake || !current() || document.visibilityState !== 'visible') { wakeUI(); return; }
+  if (!('wakeLock' in navigator)) { wakeStatus = 'unsupported'; wakeUI(); return; }
+  if (wake && !wake.released) { wakeStatus = 'on'; wakeUI(); return; }
+  if (wakeStatus === 'pending') return;
+  wakeStatus = 'pending'; wakeUI();
+  try {
+    const lock = await navigator.wakeLock.request('screen');
+    if (!wantWake || !current() || !document.getElementById('wake')) { lock.release().catch(() => {}); wakeStatus = 'idle'; wakeUI(); return; }
+    wake = lock; wakeStatus = 'on';
+    lock.addEventListener('release', () => { if (wake === lock) { wake = null; wakeStatus = 'idle'; wakeUI(); } });
+  } catch (e) { wake = null; wakeStatus = 'failed'; }
+  wakeUI();
+}
+function releaseWake(){
+  const l = wake; wake = null; if (wakeStatus !== 'unsupported') wakeStatus = 'idle';
+  if (l) l.release().catch(() => {});
+  wakeUI();
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') keepAwake(); });
+document.addEventListener('click', e => {
+  if (!e.target.closest('#wake')) return;
+  const isOn = wantWake && (wakeStatus === 'on' || wakeStatus === 'pending');
+  if (isOn) { wantWake = false; localStorage.setItem(WAKEK, 'off'); releaseWake(); }
+  else { wantWake = true; localStorage.setItem(WAKEK, 'on'); if (wakeStatus === 'failed') wakeStatus = 'idle'; keepAwake(); }
+});
 
 function renderRecipe(r){
   document.title = r.title + ' \u00B7 ' + D.title;
@@ -282,6 +340,7 @@ function renderRecipe(r){
       <h1>${esc(r.title)}</h1>
       ${r.fam ? `<span class="script">${esc(r.fam)}</span>` : ''}
       ${r.meta.length ? `<div class="meta">${r.meta.map(m => `<span>${esc(m)}</span>`).join('&nbsp;<b>\u00B7</b> ')}</div>` : ''}
+      ${r.ph ? '' : WAKE_HTML}
       ${r.ph && isUrl ? `<a class="video" href="${esc(r.src)}" target="_blank" rel="noopener">Watch the video \u2197</a>` : ''}
     </div>
     ${r.ph ? '' : `<div class="cols">
@@ -313,7 +372,7 @@ function route(){
     if (wasHome) homeScroll = window.scrollY;
     wasHome = false; if (io) { io.disconnect(); io = null; } floatBtn.classList.remove('hide'); renderRecipe(byId[id]);
   } else {
-    if (wake) { wake.release().catch(() => {}); wake = null; }
+    releaseWake();
     wasHome = true; renderHome();
   }
 }
