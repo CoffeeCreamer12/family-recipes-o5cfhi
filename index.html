@@ -54,8 +54,21 @@ header.mast .script{font-size:clamp(15px,4vw,19px);display:block;margin:6px 0 18
 .search svg{width:18px;height:18px;color:var(--sage-d);flex:none}
 .search input{flex:1;border:0;outline:0;background:transparent;font-family:var(--body);font-size:16px;color:var(--ink);min-width:0;height:44px}
 .search button{border:0;background:none;color:var(--soft);font-size:22px;line-height:1;padding:4px;cursor:pointer}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* phones: one swipeable row running edge to edge, with soft paper-coloured fades showing there is more */
+.tabs{position:relative;display:flex;gap:6px;overflow-x:auto;padding:12px 18px;margin:0 -18px;scroll-padding-inline:18px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .tabs::-webkit-scrollbar{display:none}
+.tabs:after{content:"";flex:0 0 12px}   /* extra room so the last tab (Saved) scrolls fully clear of the fade */
+.tabs.more-r{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)}
+.tabs.more-l{-webkit-mask-image:linear-gradient(to right,transparent,#000 56px);mask-image:linear-gradient(to right,transparent,#000 56px)}
+.tabs.more-l.more-r{-webkit-mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
+/* tablets, laptops, desktops: every tab visible, wrapped onto centred lines, no scrolling */
+@media(min-width:600px){
+  .tabs,.tabs.more-l,.tabs.more-r{flex-wrap:wrap;justify-content:center;overflow:visible;margin:0;padding:14px 0;row-gap:8px;
+    -webkit-mask-image:none;mask-image:none}
+  .tabs:after{display:none}
+}
+@media(min-width:900px){.tabs .tab{padding:8px 12px;letter-spacing:.11em;font-size:13.5px}}   /* laptops: usually one centred row */
 .tab{flex:none;border:1px solid var(--rule);background:transparent;border-radius:999px;padding:8px 15px;cursor:pointer;
   font-family:var(--head);font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);white-space:nowrap}
 .tab[aria-pressed=true]{background:var(--sage-d);border-color:var(--sage-d);color:#FBF8F2}
@@ -208,7 +221,17 @@ function renderHome(){
     document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-pressed', x.dataset.t === tab));
     list();
   });
-  const act = document.querySelector('.tab[aria-pressed=true]'); if (act) act.scrollIntoView({inline:'center', block:'nearest'});
+  const tabsEl = document.getElementById('tabs');
+  const fades = () => {   // phone row only: show a fade on whichever side has more tabs
+    const scrollable = tabsEl.scrollWidth > tabsEl.clientWidth + 1;
+    tabsEl.classList.toggle('more-l', scrollable && tabsEl.scrollLeft > 4);
+    tabsEl.classList.toggle('more-r', scrollable && tabsEl.scrollLeft + tabsEl.clientWidth < tabsEl.scrollWidth - 4);
+  };
+  tabsEl.addEventListener('scroll', fades, {passive: true});
+  window.onresize = fades;
+  const act = document.querySelector('.tab[aria-pressed=true]');
+  if (act && tabsEl.scrollWidth > tabsEl.clientWidth) tabsEl.scrollLeft = act.offsetLeft - (tabsEl.clientWidth - act.offsetWidth) / 2;
+  fades();
   list();
   requestAnimationFrame(() => window.scrollTo(0, homeScroll));
 }
