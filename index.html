@@ -203,6 +203,35 @@ table.ct th.m{text-align:right}
 .cv.wide{grid-column:1/-1}
 @media(min-width:760px){.cheat{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:0 28px}}
 .cvfoot{font-size:12px;font-style:italic;color:var(--soft);text-align:center;margin:18px 0 0}
+/* shopping list: button under the scaler + bottom sheet (outside #ing; the iOS Shortcut reads #ing li) */
+.shopbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;box-sizing:border-box;margin:4px 0 12px;min-height:44px;padding:10px 16px;
+  background:#fff;border:1px solid var(--sage);border-radius:999px;color:var(--sage-d);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  font-family:var(--head);font-weight:600;font-size:14.5px;letter-spacing:.14em;text-transform:uppercase}
+.shopbtn svg{width:18px;height:18px;flex:none}
+.shopbtn:active{background:var(--cream)}
+.shopbtn:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+.shopback{position:fixed;inset:0;background:rgba(42,42,40,.38);z-index:40}
+.shopsheet{position:fixed;left:0;right:0;bottom:0;z-index:41;margin:0 auto;max-width:560px;max-height:86vh;max-height:86dvh;box-sizing:border-box;display:flex;flex-direction:column;
+  background:var(--paper);border-radius:14px 14px 0 0;box-shadow:0 -6px 30px rgba(42,42,40,.18);padding:18px 18px calc(16px + env(safe-area-inset-bottom))}
+.shopback[hidden],.shopsheet[hidden]{display:none}
+.shopsheet h2{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.22em;font-size:18px;margin:0;text-align:center}
+.shopsheet h2:after{content:"";display:block;width:42px;height:1px;background:var(--sage);margin:8px auto 4px}
+.shopsub{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:4px 0 8px;overflow-wrap:anywhere}
+.shoplist{list-style:none;margin:0;padding:0 2px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1 1 auto;min-height:0}
+.shoplist label{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px dotted var(--rule);cursor:pointer;overflow-wrap:anywhere}
+.shoplist input{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;border:1.5px solid var(--sage);border-radius:4px;margin:2px 0 0;background:#fff;cursor:pointer}
+.shoplist input:checked{background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' stroke='%23fff' stroke-width='2.2' fill='none'/%3E%3C/svg%3E") center/100% no-repeat}
+.shopmsg{font-size:14px;color:var(--sage-d);text-align:center;margin:10px 0 0;font-style:italic}
+.shopmsg[hidden],.shoptext[hidden]{display:none}
+.shoptext{width:100%;box-sizing:border-box;min-height:120px;margin:8px 0 0;padding:10px;border:1px solid var(--rule);border-radius:4px;background:#fff;color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.5;-webkit-user-select:text;user-select:text}
+.shopacts{display:flex;gap:10px;margin-top:14px}
+.shopacts button{flex:1;min-height:46px;border-radius:999px;cursor:pointer;font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;touch-action:manipulation}
+.shopcopy{background:var(--sage-d);border:1px solid var(--sage-d);color:#FBF8F2}
+.shopcopy:disabled{opacity:.45;cursor:default}
+.shopcancel{background:#fff;border:1px solid var(--rule);color:var(--soft)}
+html.shopopen,html.shopopen body{overflow:hidden}
+@media print{.shopbtn,.shopsheet,.shopback{display:none}}
 /* floating surprise button (always visible, thumb-reachable on phones) */
 .float{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:20;white-space:nowrap}
 .float.hide{opacity:0;pointer-events:none}
@@ -215,6 +244,15 @@ table.ct th.m{text-align:right}
 </head>
 <body>
 <div id="app"></div>
+<div class="shopback" id="shopback" hidden></div>
+<div class="shopsheet" id="shopsheet" role="dialog" aria-modal="true" aria-labelledby="shophead" hidden>
+  <h2 id="shophead">Shopping List</h2>
+  <p class="shopsub" id="shopsub"></p>
+  <ul class="shoplist" id="shoplist"></ul>
+  <p class="shopmsg" id="shopmsg" role="status" aria-live="polite" hidden></p>
+  <textarea class="shoptext" id="shoptext" readonly hidden aria-label="Shopping list text to copy"></textarea>
+  <div class="shopacts"><button type="button" class="shopcancel" id="shopcancel">Cancel</button><button type="button" class="shopcopy" id="shopcopy">Copy</button></div>
+</div>
 <button class="surprise float" id="surprise" type="button" aria-label="Surprise me: open a random recipe">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
   Surprise me</button>
@@ -247,6 +285,7 @@ function surprise(){
 const floatBtn = document.getElementById('surprise'); let io = null;
 floatBtn.addEventListener('click', surprise);
 
+const CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h11"/><path d="M9 12h11"/><path d="M9 19h11"/><path d="M4 5h.01"/><path d="M4 12h.01"/><path d="M4 19h.01"/></svg>';
 const SCALES = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M3.5 7.5L7 4l3.5 3.5"/><path d="M17 20V4"/><path d="M13.5 16.5L17 20l3.5-3.5"/></svg>';
 const SHUFFLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>';
 
@@ -413,7 +452,7 @@ function renderRecipe(r){
       ${r.ph && isUrl ? `<a class="video" href="${esc(r.src)}" target="_blank" rel="noopener">Watch the video \u2197</a>` : ''}
     </div>
     ${r.ph ? '' : `<div class="cols">
-      <div><h2>Ingredients</h2>${scaleBar}<ul class="ing" id="ing">${ing}</ul></div>
+      <div><h2>Ingredients</h2>${scaleBar}${ii ? `<button type="button" class="shopbtn" id="shopbtn" aria-haspopup="dialog">${CART} Add to Shopping List</button>` : ''}<ul class="ing" id="ing">${ing}</ul></div>
       <div><h2>Directions</h2>${dirFlag ? `<p class="dirflag" id="dirflag" hidden>Times and pan size may need adjusting when scaled.</p>` : ''}${st ? `<ol class="steps">${st}</ol>` : `<p class="nodir">${esc(r.nodir)}</p>`}</div>
     </div>`}
     ${r.notes.length ? `<div class="notes"><h3>Notes</h3>${r.notes.map(n => `<p>${esc(n)}</p>`).join('')}</div>` : ''}
@@ -426,6 +465,8 @@ function renderRecipe(r){
     const k = +e.target.dataset.k; e.target.checked ? checked.add(k) : checked.delete(k);
     sessionStorage.setItem(ck, JSON.stringify([...checked]));
   });
+  const sb = document.getElementById('shopbtn');
+  if (sb) sb.onclick = () => openShop(r);
   if (canScale) {
     const SK = 'cb-scale-' + r.id;
     const setScale = f => {
@@ -621,8 +662,73 @@ function renderConvert(){
   window.scrollTo(0, 0);
 }
 
+
+// ---------- shopping list sheet (reads the CURRENT ingredient text, scaled or not; never touches #ing)
+const shopEl = id => document.getElementById(id);
+let shopPrevFocus = null;
+function shopLines(){ return [...document.querySelectorAll('#ing span[data-j]')].map(sp => sp.textContent.trim()).filter(Boolean); }
+function closeShop(){
+  if (shopEl('shopsheet').hidden) return;
+  shopEl('shopsheet').hidden = shopEl('shopback').hidden = true; document.documentElement.classList.remove('shopopen');
+  if (shopPrevFocus && document.contains(shopPrevFocus)) shopPrevFocus.focus();
+}
+function shopSync(){
+  const n = document.querySelectorAll('#shoplist input:checked').length;
+  shopEl('shopcopy').disabled = n === 0; shopEl('shopcopy').textContent = n ? `Copy (${n})` : 'Copy';
+}
+function openShop(r){
+  shopPrevFocus = document.activeElement;
+  const lines = shopLines(), f = document.querySelector('#seg button[aria-checked=true]');
+  const fl = f && f.dataset.f !== '1' ? ` \u00b7 scaled ${f.textContent.trim()}` : '';
+  shopEl('shopsub').textContent = r.title + fl;
+  shopEl('shoplist').innerHTML = lines.map((t, i) => `<li class="shopitem"><label><input type="checkbox" class="shopchk" data-i="${i}" checked><span class="shopline">${esc(t)}</span></label></li>`).join('');
+  shopEl('shopmsg').hidden = true; shopEl('shoptext').hidden = true; shopEl('shoptext').value = '';
+  shopEl('shopsheet').hidden = shopEl('shopback').hidden = false; document.documentElement.classList.add('shopopen');
+  shopSync(); shopEl('shopcopy').focus();
+}
+function execCopy(t){
+  // works where the async Clipboard API is missing or blocked (iframes without allow="clipboard-write", older webviews)
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.setAttribute('readonly', ''); ta.contentEditable = 'true';
+  ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;border:0;padding:0';
+  document.body.appendChild(ta);
+  let ok = false;
+  try {
+    ta.focus(); ta.select();
+    const rg = document.createRange(); rg.selectNodeContents(ta); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+    ta.setSelectionRange(0, t.length);
+    ok = document.execCommand('copy');
+  } catch (e) { ok = false; }
+  ta.remove();
+  return ok;
+}
+async function copyText(t){
+  if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext !== false) {
+    try {
+      await Promise.race([navigator.clipboard.writeText(t), new Promise((_, no) => setTimeout(() => no(new Error('timeout')), 1500))]);
+      return 'clipboard';
+    } catch (e) { /* blocked (permissions policy in an iframe, no user activation...) -> fall back */ }
+  }
+  return execCopy(t) ? 'execCommand' : '';
+}
+shopEl('shoplist').addEventListener('change', shopSync);
+shopEl('shopcancel').onclick = closeShop;
+shopEl('shopback').onclick = closeShop;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeShop(); });
+shopEl('shopcopy').onclick = async () => {
+  const lines = shopLines(), sel = [...document.querySelectorAll('#shoplist input.shopchk')].filter(c => c.checked).map(c => lines[+c.dataset.i]);
+  const t = sel.join('\n'), how = await copyText(t), msg = shopEl('shopmsg'), ta = shopEl('shoptext');
+  window.__shopLast = {how, text: t};
+  msg.hidden = false;
+  if (how) { msg.textContent = 'Copied! Open your Shopping List note and paste.'; ta.hidden = true; }
+  else {
+    msg.textContent = 'Copying isn\u2019t allowed here. Select the text below and copy it.';
+    ta.value = t; ta.hidden = false; ta.focus(); ta.select(); try { ta.setSelectionRange(0, t.length); } catch (e) {}
+  }
+};
 let wasHome = true, lastRecipe = null;
 function route(){
+  closeShop();
   const id = current();
   if (id && byId[id]) {
     if (wasHome) homeScroll = window.scrollY;
