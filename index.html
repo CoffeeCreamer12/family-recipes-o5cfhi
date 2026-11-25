@@ -203,6 +203,24 @@ table.ct th.m{text-align:right}
 .cv.wide{grid-column:1/-1}
 @media(min-width:760px){.cheat{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:0 28px}}
 .cvfoot{font-size:12px;font-style:italic;color:var(--soft);text-align:center;margin:18px 0 0}
+.cvjump{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:16px 0 0}
+.cvjump a{font-family:var(--head);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sage-d);text-decoration:none;padding:8px 12px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--rule);border-radius:999px;background:#fff;-webkit-tap-highlight-color:transparent}
+.cvjump a:hover{border-color:var(--sage);background:var(--cream)}
+.cvjump a:focus-visible{outline:2px solid var(--sage);outline-offset:1px}
+#cv-vol,#cv-wt,#cv-temp,#cv-cheat,#cv-safe{scroll-margin-top:12px}
+table.ct.safe{font-size:15.5px;margin-top:2px}
+table.ct.safe td:first-child{white-space:normal;overflow-wrap:anywhere;font-weight:500;color:var(--soft);padding-right:12px}
+table.ct.safe td.m{white-space:normal;overflow-wrap:anywhere;text-align:right;font-weight:600;color:var(--ink)}
+table.ct.safe td.m .rest,table.ct.safe td.m .doneness{display:block;font-weight:500;font-size:12.5px;color:var(--soft);font-style:italic;margin-top:3px;line-height:1.35}
+table.ct.safe tr.safegrp th{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:none;color:var(--ink);
+  text-align:left;padding:16px 6px 6px;border-bottom:1px solid var(--rule)}
+table.ct.safe tr.safegrp:first-child th{padding-top:4px}
+.safenote{font-size:13.5px;line-height:1.55;color:var(--soft);margin:0 0 14px}
+#safesrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:16px 0 0;line-height:1.55;overflow-wrap:anywhere}
+#safesrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
+#safesrc a:hover{text-decoration:underline;text-underline-offset:3px}
 /* shopping list: button under the scaler + bottom sheet (outside #ing; the iOS Shortcut reads #ing li) */
 .shopbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;box-sizing:border-box;margin:4px 0 12px;min-height:44px;padding:10px 16px;
   background:#fff;border:1px solid var(--sage);border-radius:999px;color:var(--sage-d);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
@@ -618,7 +636,14 @@ function renderConvert(){
   app.innerHTML = `<div class="wrap fade" id="convert">
     <div class="topbar"><a class="back" id="convback" href="${back.h}">${back.t}</a></div>
     <div class="cvhead"><div class="caps" style="font-size:11.5px;color:var(--sage-d)">In the kitchen</div><h1>Kitchen Conversions</h1>
-      <div class="orn">\u2767</div><span class="script">measure for measure</span></div>
+      <div class="orn">\u2767</div><span class="script">measure for measure</span>
+      <nav class="cvjump" id="cvjump" aria-label="On this page">
+        <a href="#/convert/vol">Volume</a>
+        <a href="#/convert/wt">Weight</a>
+        <a href="#/convert/oven">Oven</a>
+        <a href="#/convert/cheat">Cheat sheet</a>
+        <a href="#/convert/temps">Safe temps</a>
+      </nav></div>
     <div class="cvgrid">
       <section class="cv" id="cv-vol" aria-labelledby="h-vol"><h2 id="h-vol">Volume</h2>
         <p class="hint">US measures \u00B7 type fractions like 1/2 or 1 1/2</p>
@@ -643,6 +668,37 @@ function renderConvert(){
       <section class="cv" id="cv-cheat" aria-labelledby="h-cheat"><h2 id="h-cheat">Cheat Sheet</h2>
         <table class="ct" id="cheat"><thead><tr><th>Amount</th><th>Equals</th><th class="m">Metric</th></tr></thead><tbody>${cheat}</tbody></table>
         <table class="ct" id="cheatw"><thead><tr><th>Weight</th><th>Equals</th><th class="m">Metric</th></tr></thead><tbody>${cheatW}</tbody></table></section>
+      <section class="cv wide" id="cv-safe" aria-labelledby="h-safe"><h2 id="h-safe">Safe Cooking Temperatures</h2>
+        <p class="hint">Safe minimum internal temperatures. Always use a food thermometer.</p>
+        <p class="safenote">Some meats also need rest time after cooking. Rest time is important for certain meats because it allows the innermost parts and juices of the meats to become fully and safely cooked.</p>
+        <table class="ct safe" id="safe"><thead><tr><th>Food</th><th class="m">Internal Temperature</th></tr></thead><tbody>
+          <tr class="safegrp"><th colspan="2">Beef, bison, veal, goat, and lamb</th></tr>
+          <tr><td>Steaks, roasts, chops</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
+          <tr><td>Ground meat and sausage</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Casseroles</th></tr>
+          <tr><td>Meat and meatless</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Chicken, turkey, and other poultry</th></tr>
+          <tr><td>All: whole bird, breasts, legs, thighs, wings, ground poultry, giblets, sausage, and stuffing inside poultry.</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Eggs</th></tr>
+          <tr><td>Raw eggs</td><td class="m">Cook until yolk and white are firm</td></tr>
+          <tr><td>Egg dishes (such as frittata, quiche)</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+          <tr><td>Casseroles (containing meat and poultry)</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Ham</th></tr>
+          <tr><td>Raw ham</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
+          <tr><td>Precooked ham (to reheat)</td><td class="m">165\u00B0F (74\u00B0C)<span class="doneness">Note: Reheat cooked hams packaged in USDA-inspected plants to 140\u00B0F (60\u00B0C)</span></td></tr>
+          <tr class="safegrp"><th colspan="2">Leftovers</th></tr>
+          <tr><td>Any type</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Pork</th></tr>
+          <tr><td>Steaks, roasts, chops</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
+          <tr><td>Ground meat and sausage</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Rabbit and venison</th></tr>
+          <tr><td>Wild or farm-raised</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+          <tr class="safegrp"><th colspan="2">Seafood</th></tr>
+          <tr><td>Fish (whole or filet), such as salmon, tuna, tilapia, pollock, bass, cod, catfish, trout, etc.</td><td class="m">145\u00B0F (63\u00B0C)<span class="doneness">or cook until flesh is no longer translucent and separates easily with a fork</span></td></tr>
+          <tr><td>Shrimp, lobster, crab, and scallops</td><td class="m">Cook until flesh is pearly or white, and opaque</td></tr>
+          <tr><td>Clams, oysters, mussels</td><td class="m">Cook until shells open during cooking</td></tr>
+        </tbody></table>
+        <p id="safesrc">Source: <a href="https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures" target="_blank" rel="noopener">FoodSafety.gov</a> Safe Minimum Internal Temperature Chart, last reviewed November 21, 2024.</p></section>
     </div>
     <p class="cvfoot">US cups and spoons. Metric amounts are rounded. Volume and weight aren\u2019t interchangeable \u2014 a cup of flour and a cup of sugar weigh different amounts.</p>
     <footer><div class="orn">\u2767</div></footer>
@@ -733,11 +789,18 @@ function route(){
   if (id && byId[id]) {
     if (wasHome) homeScroll = window.scrollY;
     wasHome = false; lastRecipe = id; if (io) { io.disconnect(); io = null; } floatBtn.classList.remove('hide'); renderRecipe(byId[id]);
-  } else if (location.hash === '#/convert') {
-    if (wasHome) homeScroll = window.scrollY;
-    convBack = lastRecipe; lastRecipe = null;   // "Back to recipe" when opened from a recipe page
-    wasHome = false; if (io) { io.disconnect(); io = null; } floatBtn.classList.add('hide');   // a tools page: no floating button over the inputs
-    releaseWake(); renderConvert();
+  } else if (location.hash === '#/convert' || location.hash.startsWith('#/convert/')) {
+    if (!document.getElementById('convert')) {
+      if (wasHome) homeScroll = window.scrollY;
+      convBack = lastRecipe; lastRecipe = null;   // "Back to recipe" when opened from a recipe page
+      wasHome = false; if (io) { io.disconnect(); io = null; } floatBtn.classList.add('hide');   // a tools page: no floating button over the inputs
+      releaseWake(); renderConvert();
+    }
+    const jump = { '/vol': 'cv-vol', '/wt': 'cv-wt', '/oven': 'cv-temp', '/cheat': 'cv-cheat', '/temps': 'cv-safe' }[location.hash.slice('#/convert'.length)];
+    const el = jump && document.getElementById(jump);
+    const go = () => { if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    go();
+    requestAnimationFrame(go);
   } else {
     lastRecipe = null;
     releaseWake();
