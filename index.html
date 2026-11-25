@@ -221,6 +221,18 @@ table.ct.safe tr.safegrp:first-child th{padding-top:4px}
 #safesrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:16px 0 0;line-height:1.55;overflow-wrap:anywhere}
 #safesrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
 #safesrc a:hover{text-decoration:underline;text-underline-offset:3px}
+table.ct.safe tr.steakwrap>td,table.ct.safe tr.steakwrap>td:first-child{padding:10px 0 6px;border-bottom:none;white-space:normal;font-weight:400;color:inherit}
+.steakcard{margin:2px 0 6px;padding:14px 14px 12px;background:var(--paper);border:1px solid var(--rule);border-radius:4px}
+.steakcard h3{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:15px;margin:0;text-align:center;color:var(--ink)}
+.steakcard h3:after{content:"";display:block;width:36px;height:1px;background:var(--sage);margin:8px auto 10px}
+.steakcard .hint{margin-bottom:10px}
+.steakcard .safenote{margin:12px 0 0;text-align:left}
+table.ct.steak{margin-top:0}
+table.ct.steak td:first-child{color:var(--ink);font-weight:600}
+table.ct.steak td .center{display:block;font-weight:500;font-size:12.5px;color:var(--soft);font-style:italic;margin-top:1px}
+#steaksrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:10px 0 0;line-height:1.55;overflow-wrap:anywhere}
+#steaksrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
+#steaksrc a:hover{text-decoration:underline;text-underline-offset:3px}
 /* shopping list: button under the scaler + bottom sheet (outside #ing; the iOS Shortcut reads #ing li) */
 .shopbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;box-sizing:border-box;margin:4px 0 12px;min-height:44px;padding:10px 16px;
   background:#fff;border:1px solid var(--sage);border-radius:999px;color:var(--sage-d);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
@@ -675,6 +687,21 @@ function renderConvert(){
           <tr class="safegrp"><th colspan="2">Beef, bison, veal, goat, and lamb</th></tr>
           <tr><td>Steaks, roasts, chops</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
           <tr><td>Ground meat and sausage</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+          <tr class="steakwrap"><td colspan="2">
+            <div class="steakcard" id="steak-temps">
+              <h3 id="h-steak">Steak Doneness</h3>
+              <p class="hint">Desired doneness temperatures. Remove steaks from heat when the thermometer registers 5\u00B0F lower than desired doneness. Rest your steaks. Temperature will continue to rise.</p>
+              <table class="ct safe steak" id="steak"><thead><tr><th>Doneness</th><th class="m">Temperature</th></tr></thead><tbody>
+                <tr><td>Rare<span class="center">Cool red center</span></td><td class="m">125\u00B0F (52\u00B0C)</td></tr>
+                <tr><td>Medium rare<span class="center">Warm red center</span></td><td class="m">135\u00B0F (57\u00B0C)</td></tr>
+                <tr><td>Medium<span class="center">Warm pink center</span></td><td class="m">145\u00B0F (63\u00B0C)</td></tr>
+                <tr><td>Medium well<span class="center">Slightly pink center</span></td><td class="m">150\u00B0F (66\u00B0C)</td></tr>
+                <tr><td>Well done<span class="center">Little or no pink</span></td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
+              </tbody></table>
+              <p class="safenote" id="steaknote">The USDA\u2019s safe minimum for steaks, roasts and other whole cuts of beef is 145\u00B0F (63\u00B0C) with a 3-minute rest, so rare and medium-rare fall below that. Ground beef should reach 160\u00B0F (71\u00B0C).</p>
+              <p id="steaksrc">Source: <a href="https://www.certifiedangusbeef.com/en/cooking/degree-of-doneness" target="_blank" rel="noopener">Certified Angus Beef</a>, Degree of Doneness.</p>
+            </div>
+          </td></tr>
           <tr class="safegrp"><th colspan="2">Casseroles</th></tr>
           <tr><td>Meat and meatless</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
           <tr class="safegrp"><th colspan="2">Chicken, turkey, and other poultry</th></tr>
