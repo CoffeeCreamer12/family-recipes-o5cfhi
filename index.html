@@ -210,29 +210,49 @@ table.ct th.m{text-align:right}
 .cvjump a:hover{border-color:var(--sage);background:var(--cream)}
 .cvjump a:focus-visible{outline:2px solid var(--sage);outline-offset:1px}
 #cv-vol,#cv-wt,#cv-temp,#cv-cheat,#cv-safe{scroll-margin-top:12px}
-table.ct.safe{font-size:15.5px;margin-top:2px}
-table.ct.safe td:first-child{white-space:normal;overflow-wrap:anywhere;font-weight:500;color:var(--soft);padding-right:12px}
-table.ct.safe td.m{white-space:normal;overflow-wrap:anywhere;text-align:right;font-weight:600;color:var(--ink)}
-table.ct.safe td.m .rest,table.ct.safe td.m .doneness{display:block;font-weight:500;font-size:12.5px;color:var(--soft);font-style:italic;margin-top:3px;line-height:1.35}
-table.ct.safe tr.safegrp th{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:none;color:var(--ink);
-  text-align:left;padding:16px 6px 6px;border-bottom:1px solid var(--rule)}
-table.ct.safe tr.safegrp:first-child th{padding-top:4px}
-.safenote{font-size:13.5px;line-height:1.55;color:var(--soft);margin:0 0 14px}
-#safesrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:16px 0 0;line-height:1.55;overflow-wrap:anywhere}
-#safesrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
-#safesrc a:hover{text-decoration:underline;text-underline-offset:3px}
-table.ct.safe tr.steakwrap>td,table.ct.safe tr.steakwrap>td:first-child{padding:10px 0 6px;border-bottom:none;white-space:normal;font-weight:400;color:inherit}
-.steakcard{margin:2px 0 6px;padding:14px 14px 12px;background:var(--paper);border:1px solid var(--rule);border-radius:4px}
-.steakcard h3{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:15px;margin:0;text-align:center;color:var(--ink)}
+.safelead{font-size:14.5px;color:var(--soft);text-align:center;margin:2px 0 16px;line-height:1.45}
+.safelist{margin-top:2px}
+.safegroup{margin:0 0 6px}
+.safegroup h3{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:13.5px;color:var(--sage-d);
+  margin:0;padding:14px 0 6px;border-bottom:1px solid var(--rule);text-align:left}
+.saferow{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 16px;padding:11px 0;border-bottom:1px dotted var(--rule)}
+.safegroup .saferow:last-child{border-bottom:0}
+.safefood{min-width:0;flex:1}
+.safename{font-family:var(--head);font-weight:600;font-size:17px;line-height:1.25;color:var(--ink);overflow-wrap:anywhere}
+.safesub{font-size:12.5px;color:var(--soft);font-style:italic;margin-top:2px;line-height:1.4;overflow-wrap:anywhere}
+.safetemp{flex:none;text-align:right;max-width:46%}
+.safetemp .deg{display:block;white-space:nowrap}
+.safetemp .f{font-family:var(--head);font-weight:600;font-size:26px;line-height:1;color:var(--ink);font-variant-numeric:lining-nums}
+.safetemp .c{font-size:12.5px;color:var(--soft);font-weight:500;margin-left:3px;font-variant-numeric:lining-nums}
+.restpill{display:inline-block;margin-top:6px;padding:3px 9px;border-radius:999px;background:var(--cream);border:1px solid var(--rule);
+  font-family:var(--head);font-weight:600;font-size:12px;letter-spacing:.02em;color:var(--sage-d);white-space:nowrap}
+.safenote-inline{display:block;font-size:12.5px;font-style:italic;color:var(--soft);margin-top:4px;line-height:1.4;overflow-wrap:anywhere}
+.safetext{font-family:var(--head);font-weight:600;font-size:15px;line-height:1.3;color:var(--ink);overflow-wrap:anywhere}
+#safesrc,#steaksrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:16px 0 0;line-height:1.55;overflow-wrap:anywhere}
+#safesrc a,#steaksrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
+#safesrc a:hover,#steaksrc a:hover{text-decoration:underline;text-underline-offset:3px}
+.steakcard{margin:8px 0 14px;padding:16px 14px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:4px}
+.steakcard h3{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.18em;font-size:15px;margin:0;text-align:center;color:var(--ink)}
 .steakcard h3:after{content:"";display:block;width:36px;height:1px;background:var(--sage);margin:8px auto 10px}
-.steakcard .hint{margin-bottom:10px}
-.steakcard .safenote{margin:12px 0 0;text-align:left}
-table.ct.steak{margin-top:0}
-table.ct.steak td:first-child{color:var(--ink);font-weight:600}
-table.ct.steak td .center{display:block;font-weight:500;font-size:12.5px;color:var(--soft);font-style:italic;margin-top:1px}
-#steaksrc{font-size:12.5px;font-style:italic;color:var(--soft);text-align:center;margin:10px 0 0;line-height:1.55;overflow-wrap:anywhere}
-#steaksrc a{color:var(--sage-d);font-style:normal;font-family:var(--head);font-weight:600;letter-spacing:.02em;font-size:13px;text-decoration:none}
-#steaksrc a:hover{text-decoration:underline;text-underline-offset:3px}
+.steakcard .hint{margin:0 0 12px;font-size:13px;line-height:1.45}
+.steakscale{list-style:none;margin:0;padding:0;position:relative}
+.steakscale:before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:3px;border-radius:2px;
+  background:linear-gradient(to bottom,#7C2F2F 0%,#A34A4A 25%,#C47B7B 50%,#D9A899 75%,#A89060 100%)}
+.steakscale li{display:flex;align-items:center;gap:12px;padding:8px 0}
+.steakscale .chip{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--rule);position:relative;z-index:1}
+.steakscale .sd-rare .chip{background:#7C2F2F}
+.steakscale .sd-midrare .chip{background:#A34A4A}
+.steakscale .sd-medium .chip{background:#C47B7B}
+.steakscale .sd-midwell .chip{background:#D9A899}
+.steakscale .sd-well .chip{background:#A89060}
+.sdname{flex:1;min-width:0;font-family:var(--head);font-weight:600;font-size:16.5px;line-height:1.2;color:var(--ink)}
+.sdname .center{display:block;font-weight:500;font-size:12.5px;color:var(--soft);font-style:italic;margin-top:1px}
+.sdtemp{flex:none;text-align:right;white-space:nowrap}
+.sdtemp .f{font-family:var(--head);font-weight:600;font-size:24px;line-height:1;color:var(--ink);font-variant-numeric:lining-nums}
+.sdtemp .c{font-size:12px;color:var(--soft);font-weight:500;margin-left:3px;font-variant-numeric:lining-nums}
+#steaknote{font-size:12.5px;line-height:1.5;color:var(--soft);margin:10px 0 0;text-align:left}
+#steaksrc{margin-top:10px}
+@media(min-width:760px){.safelist{max-width:640px;margin-left:auto;margin-right:auto}}
 /* shopping list: button under the scaler + bottom sheet (outside #ing; the iOS Shortcut reads #ing li) */
 .shopbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;box-sizing:border-box;margin:4px 0 12px;min-height:44px;padding:10px 16px;
   background:#fff;border:1px solid var(--sage);border-radius:999px;color:var(--sage-d);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
@@ -681,50 +701,75 @@ function renderConvert(){
         <table class="ct" id="cheat"><thead><tr><th>Amount</th><th>Equals</th><th class="m">Metric</th></tr></thead><tbody>${cheat}</tbody></table>
         <table class="ct" id="cheatw"><thead><tr><th>Weight</th><th>Equals</th><th class="m">Metric</th></tr></thead><tbody>${cheatW}</tbody></table></section>
       <section class="cv wide" id="cv-safe" aria-labelledby="h-safe"><h2 id="h-safe">Safe Cooking Temperatures</h2>
-        <p class="hint">Safe minimum internal temperatures. Always use a food thermometer.</p>
-        <p class="safenote">Some meats also need rest time after cooking. Rest time is important for certain meats because it allows the innermost parts and juices of the meats to become fully and safely cooked.</p>
-        <table class="ct safe" id="safe"><thead><tr><th>Food</th><th class="m">Internal Temperature</th></tr></thead><tbody>
-          <tr class="safegrp"><th colspan="2">Beef, bison, veal, goat, and lamb</th></tr>
-          <tr><td>Steaks, roasts, chops</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
-          <tr><td>Ground meat and sausage</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
-          <tr class="steakwrap"><td colspan="2">
-            <div class="steakcard" id="steak-temps">
-              <h3 id="h-steak">Steak Doneness</h3>
-              <p class="hint">Desired doneness temperatures. Remove steaks from heat when the thermometer registers 5\u00B0F lower than desired doneness. Rest your steaks. Temperature will continue to rise.</p>
-              <table class="ct safe steak" id="steak"><thead><tr><th>Doneness</th><th class="m">Temperature</th></tr></thead><tbody>
-                <tr><td>Rare<span class="center">Cool red center</span></td><td class="m">125\u00B0F (52\u00B0C)</td></tr>
-                <tr><td>Medium rare<span class="center">Warm red center</span></td><td class="m">135\u00B0F (57\u00B0C)</td></tr>
-                <tr><td>Medium<span class="center">Warm pink center</span></td><td class="m">145\u00B0F (63\u00B0C)</td></tr>
-                <tr><td>Medium well<span class="center">Slightly pink center</span></td><td class="m">150\u00B0F (66\u00B0C)</td></tr>
-                <tr><td>Well done<span class="center">Little or no pink</span></td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
-              </tbody></table>
-              <p class="safenote" id="steaknote">The USDA\u2019s safe minimum for steaks, roasts and other whole cuts of beef is 145\u00B0F (63\u00B0C) with a 3-minute rest, so rare and medium-rare fall below that. Ground beef should reach 160\u00B0F (71\u00B0C).</p>
-              <p id="steaksrc">Source: <a href="https://www.certifiedangusbeef.com/en/cooking/degree-of-doneness" target="_blank" rel="noopener">Certified Angus Beef</a>, Degree of Doneness.</p>
-            </div>
-          </td></tr>
-          <tr class="safegrp"><th colspan="2">Casseroles</th></tr>
-          <tr><td>Meat and meatless</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Chicken, turkey, and other poultry</th></tr>
-          <tr><td>All: whole bird, breasts, legs, thighs, wings, ground poultry, giblets, sausage, and stuffing inside poultry.</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Eggs</th></tr>
-          <tr><td>Raw eggs</td><td class="m">Cook until yolk and white are firm</td></tr>
-          <tr><td>Egg dishes (such as frittata, quiche)</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
-          <tr><td>Casseroles (containing meat and poultry)</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Ham</th></tr>
-          <tr><td>Raw ham</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
-          <tr><td>Precooked ham (to reheat)</td><td class="m">165\u00B0F (74\u00B0C)<span class="doneness">Note: Reheat cooked hams packaged in USDA-inspected plants to 140\u00B0F (60\u00B0C)</span></td></tr>
-          <tr class="safegrp"><th colspan="2">Leftovers</th></tr>
-          <tr><td>Any type</td><td class="m">165\u00B0F (74\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Pork</th></tr>
-          <tr><td>Steaks, roasts, chops</td><td class="m">145\u00B0F (63\u00B0C)<span class="rest">Rest time: 3 minutes</span></td></tr>
-          <tr><td>Ground meat and sausage</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Rabbit and venison</th></tr>
-          <tr><td>Wild or farm-raised</td><td class="m">160\u00B0F (71\u00B0C)</td></tr>
-          <tr class="safegrp"><th colspan="2">Seafood</th></tr>
-          <tr><td>Fish (whole or filet), such as salmon, tuna, tilapia, pollock, bass, cod, catfish, trout, etc.</td><td class="m">145\u00B0F (63\u00B0C)<span class="doneness">or cook until flesh is no longer translucent and separates easily with a fork</span></td></tr>
-          <tr><td>Shrimp, lobster, crab, and scallops</td><td class="m">Cook until flesh is pearly or white, and opaque</td></tr>
-          <tr><td>Clams, oysters, mussels</td><td class="m">Cook until shells open during cooking</td></tr>
-        </tbody></table>
+        <p class="safelead">Check the thickest part with a thermometer.</p>
+        <div class="safelist" id="safe">
+          <div class="safegroup">
+            <h3>Beef, pork, veal &amp; lamb</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Steaks, roasts, chops</div><div class="safesub">Beef, bison, veal, goat, and lamb</div><span class="restpill">Rest time: 3 minutes</span></div>
+              <div class="safetemp"><span class="deg"><span class="f">145\u00B0F</span> <span class="c">(63\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Steaks, roasts, chops</div><div class="safesub">Pork</div><span class="restpill">Rest time: 3 minutes</span></div>
+              <div class="safetemp"><span class="deg"><span class="f">145\u00B0F</span> <span class="c">(63\u00B0C)</span></span></div></div>
+          </div>
+          <div class="steakcard" id="steak-temps">
+            <h3 id="h-steak">Steak Doneness</h3>
+            <p class="hint">These are the desired doneness temperatures. Pull steaks 5\u00B0F early and rest; the temperature will keep rising.</p>
+            <ol class="steakscale" id="steak" aria-label="Steak doneness from rare to well done">
+              <li class="sd-rare"><span class="chip" aria-hidden="true"></span><span class="sdname">Rare<span class="center">Cool red center</span></span><span class="sdtemp"><span class="f">125\u00B0F</span> <span class="c">(52\u00B0C)</span></span></li>
+              <li class="sd-midrare"><span class="chip" aria-hidden="true"></span><span class="sdname">Medium rare<span class="center">Warm red center</span></span><span class="sdtemp"><span class="f">135\u00B0F</span> <span class="c">(57\u00B0C)</span></span></li>
+              <li class="sd-medium"><span class="chip" aria-hidden="true"></span><span class="sdname">Medium<span class="center">Warm pink center</span></span><span class="sdtemp"><span class="f">145\u00B0F</span> <span class="c">(63\u00B0C)</span></span></li>
+              <li class="sd-midwell"><span class="chip" aria-hidden="true"></span><span class="sdname">Medium well<span class="center">Slightly pink center</span></span><span class="sdtemp"><span class="f">150\u00B0F</span> <span class="c">(66\u00B0C)</span></span></li>
+              <li class="sd-well"><span class="chip" aria-hidden="true"></span><span class="sdname">Well done<span class="center">Little or no pink</span></span><span class="sdtemp"><span class="f">160\u00B0F</span> <span class="c">(71\u00B0C)</span></span></li>
+            </ol>
+            <p id="steaknote">The USDA\u2019s safe minimum for steaks, roasts and other whole cuts of beef is 145\u00B0F (63\u00B0C) with a 3-minute rest, so rare and medium-rare fall below that. Ground beef should reach 160\u00B0F (71\u00B0C).</p>
+            <p id="steaksrc">Source: <a href="https://www.certifiedangusbeef.com/en/cooking/degree-of-doneness" target="_blank" rel="noopener">Certified Angus Beef</a>, Degree of Doneness.</p>
+          </div>
+          <div class="safegroup">
+            <h3>Ground meats</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Ground meat and sausage</div><div class="safesub">Beef, bison, veal, goat, and lamb</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">160\u00B0F</span> <span class="c">(71\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Ground meat and sausage</div><div class="safesub">Pork</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">160\u00B0F</span> <span class="c">(71\u00B0C)</span></span></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Poultry</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Chicken, turkey, and other poultry</div><div class="safesub">All: whole bird, breasts, legs, thighs, wings, ground poultry, giblets, sausage, and stuffing inside poultry.</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">165\u00B0F</span> <span class="c">(74\u00B0C)</span></span></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Ham</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Raw ham</div><span class="restpill">Rest time: 3 minutes</span></div>
+              <div class="safetemp"><span class="deg"><span class="f">145\u00B0F</span> <span class="c">(63\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Precooked ham (to reheat)</div><div class="safesub">Note: Reheat cooked hams packaged in USDA-inspected plants to 140\u00B0F (60\u00B0C)</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">165\u00B0F</span> <span class="c">(74\u00B0C)</span></span></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Rabbit and venison</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Rabbit and venison</div><div class="safesub">Wild or farm-raised</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">160\u00B0F</span> <span class="c">(71\u00B0C)</span></span></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Seafood</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Fish (whole or filet), such as salmon, tuna, tilapia, pollock, bass, cod, catfish, trout, etc.</div><div class="safesub">or cook until flesh is no longer translucent and separates easily with a fork</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">145\u00B0F</span> <span class="c">(63\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Shrimp, lobster, crab, and scallops</div><div class="safetext">Cook until flesh is pearly or white, and opaque</div></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Clams, oysters, mussels</div><div class="safetext">Cook until shells open during cooking</div></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Eggs</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Raw eggs</div><div class="safetext">Cook until yolk and white are firm</div></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Egg dishes (such as frittata, quiche)</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">160\u00B0F</span> <span class="c">(71\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Casseroles (containing meat and poultry)</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">165\u00B0F</span> <span class="c">(74\u00B0C)</span></span></div></div>
+          </div>
+          <div class="safegroup">
+            <h3>Casseroles and leftovers</h3>
+            <div class="saferow"><div class="safefood"><div class="safename">Casseroles</div><div class="safesub">Meat and meatless</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">165\u00B0F</span> <span class="c">(74\u00B0C)</span></span></div></div>
+            <div class="saferow"><div class="safefood"><div class="safename">Leftovers</div><div class="safesub">Any type</div></div>
+              <div class="safetemp"><span class="deg"><span class="f">165\u00B0F</span> <span class="c">(74\u00B0C)</span></span></div></div>
+          </div>
+        </div>
         <p id="safesrc">Source: <a href="https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures" target="_blank" rel="noopener">FoodSafety.gov</a> Safe Minimum Internal Temperature Chart, last reviewed November 21, 2024.</p></section>
     </div>
     <p class="cvfoot">US cups and spoons. Metric amounts are rounded. Volume and weight aren\u2019t interchangeable \u2014 a cup of flour and a cup of sugar weigh different amounts.</p>
